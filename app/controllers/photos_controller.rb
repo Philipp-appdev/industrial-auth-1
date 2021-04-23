@@ -1,5 +1,6 @@
 class PhotosController < ApplicationController
   before_action :set_photo, only: %i[ show edit update destroy ]
+  before_action :ensure_current_user_is_owner, only: [ :edit, :update, :destroy ]
 
   # GET /photos or /photos.json
   def index
@@ -8,6 +9,12 @@ class PhotosController < ApplicationController
 
   # GET /photos/1 or /photos/1.json
   def show
+    # only allow accepted followers to view photos
+    #if photo.owner.followers.include?(current_user)
+    #  render show.html.erb
+    #else
+    #  "Hello"
+    #end
   end
 
   # GET /photos/new
@@ -67,4 +74,12 @@ class PhotosController < ApplicationController
     def photo_params
       params.require(:photo).permit(:image, :comments_count, :likes_count, :caption, :owner_id)
     end
+
+    # only allow current user to do certain actions
+    def ensure_current_user_is_owner
+      if current_user != @photo.owner
+      redirect_back fallback_location: root_url, alert: "You're not authorized for that!"
+      end
+    end
+
 end

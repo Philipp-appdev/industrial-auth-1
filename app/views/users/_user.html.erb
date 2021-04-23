@@ -48,7 +48,7 @@
 
         <% end %>
       </div>
-
+    <% if @user==current_user %>
       <div class="col">
         <%=
           link_to "#",
@@ -65,6 +65,7 @@
 
         <% end %>
       </div>
+      <% end %>
     </div>
 
     <div class="row mb-3">

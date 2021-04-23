@@ -4,16 +4,20 @@
   </div>
 </div>
 
+<%if @user.followers.find_by(id: current_user.id) || @user==current_user%>
 <div class="row mb-2">
   <div class="col-md-6 offset-md-3">
     <%= render "users/profile_nav", user: @user %>
   </div>
 </div>
+<%end%>
 
-<% @user.own_photos.each do |photo| %>
-  <div class="row mb-4">
-    <div class="col-md-6 offset-md-3">
-      <%= render "photos/photo", photo: photo %>
+<%if @user.followers.find_by(id: current_user.id) || @user==current_user%>
+  <% @user.own_photos.each do |photo| %>
+    <div class="row mb-4">
+      <div class="col-md-6 offset-md-3">
+        <%= render "photos/photo", photo: photo %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
