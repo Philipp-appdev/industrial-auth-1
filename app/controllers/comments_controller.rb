@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :ensure_current_user_is_author, only: [ :edit, :update, :destroy ]
 
   # GET /comments or /comments.json
   def index
@@ -67,4 +68,12 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:author_id, :photo_id, :body)
     end
+
+    # only allow current user to do certain actions
+    def ensure_current_user_is_author
+      if current_user != @comment.author
+      redirect_back fallback_location: root_url, alert: "You're not authorized for that!"
+      end
+    end
+
 end
