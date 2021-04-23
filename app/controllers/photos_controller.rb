@@ -9,6 +9,12 @@ class PhotosController < ApplicationController
 
   # GET /photos/1 or /photos/1.json
   def show
+    # only allow accepted followers to view photos
+    #if photo.owner.followers.include?(current_user)
+    #  render show.html.erb
+    #else
+    #  "Hello"
+    #end
   end
 
   # GET /photos/new
