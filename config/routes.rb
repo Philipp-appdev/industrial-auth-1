@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "users#feed"
 
+
   devise_for :users
   
   resources :comments
@@ -14,4 +15,5 @@ Rails.application.routes.draw do
   get ":username/discover" => "users#discover", as: :discover
   get ":username/followers" => "users#followers", as: :followers
   get ":username/following" => "users#following", as: :following
+  
 end
